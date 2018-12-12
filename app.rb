@@ -56,8 +56,19 @@ post '/new'do
 end #/new
 
 get '/details/:post_id' do
+ 
+    post_id = params[:post_id]
+	comments = @db.execute "select * from Posts where id = ?",[post_id]
+    @comment = comments[0] # take the first comment only   
+    erb :details
+    
+end
+
+post '/details/:post_id' do
 
    post_id = params[:post_id]
-   erb "displaying info about post_id: #{post_id}"
+   content = params[:content]
+   erb "You entered comment: #{content} to post id: #{post_id}"
+  #@db.execute 'Insert into '
 
 end
