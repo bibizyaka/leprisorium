@@ -24,7 +24,7 @@ configure do
                (
                 
 	                Id INTEGER PRIMARY KEY AUTOINCREMENT,
-	                Created_date DATE,
+	                created_date DATE,
 	     			content TEXT
 
      			)'
@@ -42,15 +42,16 @@ end
 
 post '/new'do
 
-   @content = params[:content]
-   if @content.strip.size == 0
+   content = params[:content]
+   if content.strip.size == 0
 
 	  @error = "Post Message can't be empty!"
       erb :new
-   
+
    else
 
-      erb "Your message: #{@content}, <br/>POST submitted, thank you!"
+      @db.execute 'Insert into Posts (content, created_date) values ( ? , datetime()) ',[content]
+      erb "Your message: #{content}, <br/>POST submitted, thank you!"
 
    end
 
