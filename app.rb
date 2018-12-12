@@ -11,3 +11,9 @@ get '/new' do
 
 	erb :new
 end
+
+post '/new'do
+
+   erb "POST submitted, thank you!"
+
+end
