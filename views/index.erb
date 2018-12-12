@@ -1,0 +1,16 @@
+ <h2>Latest Posts:</h2>
+    <br/>
+          <%@results.each do |post| %> 
+			
+			<p style="border-bottom: 1px solid silver; padding:10px;margin-left:10px; border-radius: 3px;">
+      		    <%=post[2]%>
+            <br/><br/>
+      		  Added at: <%=post[1]%>
+      		  <br/><br/>
+      		  <a href="/post/<%=post[0]%>">Comments</a>
+      	    </p>
+      	    <br/>
+		  <%end%>
+
+
+

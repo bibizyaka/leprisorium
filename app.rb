@@ -14,7 +14,6 @@ end
 before  do
    
     init_db # start function with connecting to our DB
-
 end
 
 configure do 
@@ -24,15 +23,16 @@ configure do
                (
                 
 	                Id INTEGER PRIMARY KEY AUTOINCREMENT,
-	                created_date DATE,
+	                Created_date DATE,
 	     			content TEXT
 
      			)'
-
 end
 
 get '/' do
-	erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"			
+
+	@results = @db.execute 'Select * from Posts order by id desc'
+	erb :index
 end 
 
 get '/new' do 
@@ -47,12 +47,10 @@ post '/new'do
 
 	  @error = "Post Message can't be empty!"
       erb :new
-
    else
 
-      @db.execute 'Insert into Posts (content, created_date) values ( ? , datetime()) ',[content]
-      erb "Your message: #{content}, <br/>POST submitted, thank you!"
-
+      @db.execute 'Insert into Posts (content, Created_date) values ( ? , datetime()) ',[content]
+      redirect to '/'
    end
 
 end
