@@ -13,7 +13,21 @@ end
 
 before  do
    
+    init_db # start function with connecting to our DB
+
+end
+
+configure do 
+    
     init_db 
+    @db.execute 'CREATE TABLE IF NOT EXISTS "Posts"
+               (
+                
+	                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+	                Created_date DATE,
+	     			content TEXT
+
+     			)'
 
 end
 
@@ -29,7 +43,15 @@ end
 post '/new'do
 
    @content = params[:content]
+   if @content.strip.size == 0
 
-   erb "Your message: #{@content}, <br/>POST submitted, thank you!"
+	  @error = "Post Message can't be empty!"
+      erb :new
+   
+   else
+
+      erb "Your message: #{@content}, <br/>POST submitted, thank you!"
+
+   end
 
 end
