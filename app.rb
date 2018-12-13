@@ -27,6 +27,16 @@ configure do
 	     			content TEXT
 
      			)'
+    @db.execute 'CREATE TABLE IF NOT EXISTS "Comments"
+               (
+                
+	                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+	                Created_date DATE,
+	     			content TEXT,
+	     			post_id INTEGER
+
+     			)'
+
 end
 
 get '/' do
@@ -57,9 +67,14 @@ end #/new
 
 get '/details/:post_id' do
  
-    post_id = params[:post_id]
-	comments = @db.execute "select * from Posts where id = ?",[post_id]
-    @comment = comments[0] # take the first comment only   
+    post_id  = params[:post_id]
+	posts = @db.execute "select * from Posts where id = ?",[post_id]
+    @post = posts[0] # take the first comment only
+
+    # get comment for selected post message
+       
+    @comments = @db.execute "select * from Comments where post_id = ? order by id", [post_id]
+    
     erb :details
     
 end
@@ -68,7 +83,12 @@ post '/details/:post_id' do
 
    post_id = params[:post_id]
    content = params[:content]
-   erb "You entered comment: #{content} to post id: #{post_id}"
-  #@db.execute 'Insert into '
+   if (content.size == 0)
+   	  @error = "Comment cannot be empty!"
+      #erb :details/:post_id
+   else
+      @db.execute 'Insert into Comments (content, created_date, post_id) values (?,datetime(),?)',[content,post_id]
+      redirect ('/details/' + post_id)
+  end
 
-end
+end #post details

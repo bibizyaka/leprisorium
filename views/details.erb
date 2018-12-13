@@ -1,15 +1,25 @@
  <h2>Posts Details:</h2>
     <br/>
-	<p style="border-bottom: 1px solid silver; padding:10px;margin-left:10px; border-radius: 3px;">
-        <%=@comment[2]%>
+	<p style="border-bottom: 2px solid silver; padding:10px;margin-left:10px; border-radius: 3px;">
+        <%=@post[2]%>
 	    <br/><br/>
-	    Commented at: <%=@comment[1]%>	    
+	    Commented at: <%=@post[1]%>	    
      </p>
      <br/>
+     <h3>Comments:</h3>
+       <%@comments.each do |comment|%>
+          <p style="border-bottom: 1px solid blue; padding:10px;margin-left:15px; border-radius: 3px;">
+           <%=comment[2]%>
+	       <br/><br/>
+	       Commented at: <%=comment[1]%>	    
+     </p>
+      <% end %>
+     <br/>
+         
      <h2>Add Comment</h2>
 
      <p>
-	    <form method="POST" action="/details/<%=@comment[0]%>" role="form">
+	    <form method="POST" action="/details/<%=@post[0]%>" role="form">
 	
 		   <textarea name="content" style="width: 400px;" class="form-control" rows="6" placeholder="add comment here..."></textarea>
 	
@@ -18,7 +28,3 @@
 	
 	    </form>
 	 </p>
-
-
-
-     
