@@ -24,7 +24,8 @@ configure do
                 
 	                Id INTEGER PRIMARY KEY AUTOINCREMENT,
 	                Created_date DATE,
-	     			content TEXT
+	     			content TEXT,
+	     			author TEXT
 
      			)'
     @db.execute 'CREATE TABLE IF NOT EXISTS "Comments"
@@ -52,18 +53,25 @@ end
 
 post '/new'do
 
-   content = params[:content]
-   if content.strip.size == 0
+   @content = params[:content]
+   @author = params[:author]
+   
+   if @author.strip.size == 0 
+
+	  @error = "Enter Your Name"
+      erb :new
+   
+   elsif @content.strip.size == 0 
 
 	  @error = "Post Message can't be empty!"
       erb :new
    else
 
-      @db.execute 'Insert into Posts (content, Created_date) values ( ? , datetime()) ',[content]
+      @db.execute 'Insert into Posts (content, Created_date, author) values ( ? , datetime(), ?) ',[@content, @author]
       redirect to '/'
    end
 
-end #/new
+end #/new 
 
 get '/details/:post_id' do
  
@@ -83,10 +91,12 @@ post '/details/:post_id' do
 
    post_id = params[:post_id]
    content = params[:content]
-   if (content.size == 0)
+   if (content.strip.size == 0)
+   	
    	  @error = "Comment cannot be empty!"
-      #erb :details/:post_id
+      #erb :details
    else
+
       @db.execute 'Insert into Comments (content, created_date, post_id) values (?,datetime(),?)',[content,post_id]
       redirect ('/details/' + post_id)
   end

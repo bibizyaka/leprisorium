@@ -5,13 +5,13 @@
 	    <br/><br/>
 	    Commented at: <%=@post[1]%>	    
      </p>
-     <br/>
+     <br/> 
      <h3>Comments:</h3>
        <%@comments.each do |comment|%>
           <p style="border-bottom: 1px solid blue; padding:10px;margin-left:15px; border-radius: 3px;">
            <%=comment[2]%>
 	       <br/><br/>
-	       Commented at: <%=comment[1]%>	    
+	       <span style="font-size: 75%; color: #999">Commented at: <%=comment[1]%> </span>	    
      </p>
       <% end %>
      <br/>

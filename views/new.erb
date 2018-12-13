@@ -2,8 +2,11 @@
 
  <p>
 	 <form method="POST" action="/new" role="form">
-	
-		<textarea name="content" style="width: 400px;" class="form-control" rows="6" placeholder="add post here..."></textarea>
+	   
+	   <label for = "author">Your Name:</label><br/>
+	   <input class="form-control" style="width: 400px;" type="text" name="author" id="author" placeholder = "Type Your Name..." value="<%=@author%>"><br/>
+
+		<textarea name="content" style="width: 400px;" class="form-control" rows="6" placeholder="Add Post Here..." ><%=@content%></textarea>
 	
 	    <br/><button type="submit" class="btn btn-primary">Submit</button>
 	
